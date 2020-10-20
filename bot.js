@@ -1,7 +1,7 @@
 const Telegraf = require('telegraf');
 const bot = new Telegraf(process.env.token);
 
-const my = /my/gi;
+const my = /(?<=(\W|^))((my|your|his|hers|theirs)*)(?=(\W|$))/gi;
 const mio = /(?<=(\W|^))((mio|tuo|suo|vostro)o*)(?=(\W|$))/gi;
 const mia = /(?<=(\W|^))((mia|tua|sua|vostra)a*)(?=(\W|$))/gi;
 const miei = /(?<=(\W|^))((miei|tuoi|suoi|vostri)i*)(?=(\W|$))/gi;
