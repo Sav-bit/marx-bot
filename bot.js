@@ -1,5 +1,5 @@
 const Telegraf = require('telegraf');
-const bot = new Telegraf('###telegraf-token-here###');
+const bot = new Telegraf(process.env.token);
 
 const my = /my/gi;
 const mio = /(?<=(\W|^))((mio|tuo|suo|vostro)o*)(?=(\W|$))/gi;
