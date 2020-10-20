@@ -10,7 +10,7 @@ const mie = /(?<=(\W|^))((mie|tue|sue|vostre)e*)(?=(\W|$))/gi;
 bot.start((ctx) => ctx.reply('Mi fa piacere essere qui compagni.'));
 
 
-bot.on('message', (ctx) => {
+bot.on(['message', 'video', 'photo'], (ctx) => {
   let msg = ctx.message.text;
   let chat = ctx.chat.id;
   try{
