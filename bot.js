@@ -1,6 +1,13 @@
 const Telegraf = require('telegraf');
-const bot = new Telegraf(process.env.token);
+const rateLimit = require('telegraf-ratelimit');
+const limitConfig = {
+  window: 5000,
+  limit: 4,
+  onLimitExceeded: (ctx, next) => ctx.reply('State sprecando il NOSTRO tempo, abbiamo anche altro da fare oltre che correggere messaggi.')
+}
 
+const bot = new Telegraf(process.env.token);
+bot.use(rateLimit(limitConfig))
 const my = /my/gi;
 const mio = /(?<=(\W|^))((mio|tuo|suo|vostro)o*)(?=(\W|$))/gi;
 const mia = /(?<=(\W|^))((mia|tua|sua|vostra)a*)(?=(\W|$))/gi;
@@ -11,7 +18,7 @@ bot.start((ctx) => ctx.reply('Mi fa piacere essere qui compagni.'));
 
 
 bot.on(['message', 'video', 'photo'], (ctx) => {
-  let msg = ctx.message.text;
+  let msg = ctx.message.text || ctx.message.caption;
   let chat = ctx.chat.id;
   try{
   let noSpace = / /gi;
