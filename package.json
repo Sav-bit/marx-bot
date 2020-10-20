@@ -9,5 +9,5 @@
   },
   "dependencies": {
     "telegraf": "^3.33.3"
-  },
+  }
 }
