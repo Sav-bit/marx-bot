@@ -22,7 +22,7 @@ bot.on(['message', 'video', 'photo'], (ctx) => {
 
 		let nms = marxify(msg)
 
-		if (nms.localeCompare(msg) != 0)
+		if (nms != 0 && nms.localeCompare(msg) != 0)
 
 			ctx.reply(nms + '*');
 		//send(chat, nms+"*");
