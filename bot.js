@@ -3,6 +3,12 @@ const rateLimit = require('telegraf-ratelimit');
 const bot = new Telegraf(process.env.token);
 const { marxify } = require('./communism');
 
+// Record last time WE sent a message as correction
+let lastTime=Date.now();
+// Set an average of 10 messages per week
+//  converted to messages per millisecond
+const messageRate=10 / (7*24*60*60*1000);
+
 bot.use(rateLimit({
 	window: 30000,
 	limit: 6,
@@ -20,7 +26,17 @@ bot.on(['message', 'video', 'photo'], (ctx) => {
 		//console.log(simpsonref);
 		if (simpsonref.toLowerCase().includes('unionesovietica?manonsieradisciolta?')) ctx.reply('Si, è questo che volevamo farvi credere *preme bottone*');
 
-		let nms = marxify(msg)
+		let timeNow=Date.now();
+		let sinceLast=timeNow-lastTime;
+		let probOfThisMessage=1-Math.exp(-messageRate * sinceLast);
+		
+		// Will WE send it?
+		if(Math.random() < probOfThisMessage){
+			// Update the last time
+			lastTime=timeNow;
+
+			let nms = marxify(msg);
+		}
 
 		if (nms.localeCompare(msg) != 0)
 
