@@ -45,4 +45,6 @@ test('Edgecases', () => {
 	expect(marxify('a?')).toBe('a?');
 	expect(marxify('a? e!')).toBe('a? e!');
 	expect(marxify('È')).toBe('È');
+	expect(marxify('')).toBe('');
+	expect(marxify(' ')).toBe(' ');
 });
