@@ -28,7 +28,7 @@ bot.use(rateLimit({
 	}
 }));
 
-bot.start((ctx) => ctx.reply('Mi fa piacere essere qui compagni.'));
+bot.start((ctx) => ctx.reply('Mi fa piacere essere qui kompagni.'));
 
 bot.on(['message', 'video', 'photo'], (ctx) => {
 	let msg = ctx.message.text || ctx.message.caption;
