@@ -3,14 +3,14 @@ const mio = /(?<!\w)(mio|tuo|suo|vostro)(?=\s|$)/gi;
 const mia = /(?<!\w)(mia|tua|sua|vostra)(?=\s|$)/gi;
 const miei = /(?<!\w)(miei|tuoi|suoi|vostri)(?=\s|$)/gi;
 const mie = /(?<!\w)(mie|tue|sue|vostre)(?=\s|$)/gi;
-const nasz = /(?<!\w)(mój|moj|twój|twoj|jej|jego|wasz|ich)(?=\s|$)/gi;
-const nuestro = /(?<!\w)(mi|tu|vuestro|su)(?=\s|$)/gi;
-const nuestros = /(?<!\w)(mis|tus|vuestros|sus)(?=\s|$)/gi;
+const nasz = /(?<!\w)(mój|moj|twój|twoj|jej|jego|wasz)(?=\s|$)/gi;
+const nuestro = /(?<!\w)(vuestro)(?=\s|$)/gi;
+const nuestros = /(?<!\w)(mis|tus|vuestros)(?=\s|$)/gi;
 const nuestra = /(?<!\w)(vuestra)(?=\s|$)/gi;
 const nuestras = /(?<!\w)(vuestras)(?=\s|$)/gi;
 const unser = /(?<!\w)(mein|dein|sein|ihr|euer)(?=\s|$)/gi;
 const unsere = /(?<!\w)(meine|deine|seine|ihre|eure|euere)(?=\s|$)/gi;
-const notre = /(?<!\w)(mon|ma|ton|ta|son|sa|votre|leur)(?=\s|$)/gi;
+const notre = /(?<!\w)(mon|ton|ta|votre|leur)(?=\s|$)/gi;
 const nos = /(?<!\w)(mes|tes|ses|vos|leurs)(?=\s|$)/gi;
 
 module.exports = {
