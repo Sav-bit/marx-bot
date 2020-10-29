@@ -1,0 +1,17 @@
+{
+  "name": "marx-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "telegraf": "^3.38.0",
+    "telegraf-ratelimit": "^2.0.0"
+  },
+  "devDependencies": {
+    "jest": "^26.6.0"
+  }
+}

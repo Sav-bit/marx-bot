@@ -1,38 +1,44 @@
 const Telegraf = require('telegraf');
-const bot = new Telegraf('###telegraf-token-here###');
+const rateLimit = require('telegraf-ratelimit');
+const bot = new Telegraf(process.env.token);
+const { marxify } = require('./communism');
 
-const my = /my/gi;
-const mio = /(?<=(\W|^))((mio|tuo|suo|vostro)o*)(?=(\W|$))/gi;
-const mia = /(?<=(\W|^))((mia|tua|sua|vostra)a*)(?=(\W|$))/gi;
-const miei = /(?<=(\W|^))((miei|tuoi|suoi|vostri)i*)(?=(\W|$))/gi;
-const mie = /(?<=(\W|^))((mie|tue|sue|vostre)e*)(?=(\W|$))/gi;
+// Record last time WE sent a message as correction
+let lastTime = Date.now();
+// Set an average of 10 messages per hour
+//  converted to messages per millisecond
+const messageRate = 10 / (60 * 60 * 1000);
 
-bot.start((ctx) => ctx.reply('Mi fa piacere essere qui compagni.'));
+bot.use(rateLimit({
+	window: 60 * 60 * 1000,
+	limit: 10,
+	onLimitExceeded: (ctx, next) => {
+		let timeNow = Date.now();
+		let sinceLast = timeNow - lastTime;
+		let probOfThisMessage = 1 - Math.exp(-messageRate * sinceLast);
+		if (Math.random() <= probOfThisMessage) {
+			lastTime = timeNow;
+			next();
+		} else if (sinceLast < 10000) {
+			let msg = ctx.message.text || ctx.message.caption;
+			let nms = marxify(msg);
+			if (nms.localeCompare(msg) != 0)
+				ctx.reply('State sprecando il NOSTRO tempo, abbiamo anche altro da fare oltre che correggere messaggi.');
+		}
+	}
+}));
 
+bot.start((ctx) => ctx.reply('Mi fa piacere essere qui kompagni.'));
 
-bot.on('message', (ctx) => {
-  let msg = ctx.message.text;
-  let chat = ctx.chat.id;
-  try{
-  let noSpace = / /gi;
-  let simpsonref = msg.replace(noSpace,'');
-  //console.log(simpsonref);
-  if(simpsonref.toLowerCase().includes('unionesovietica?manonsieradisciolta?')) ctx.reply('Si, è questo che volevamo farvi credere *preme bottone*');
-  //english part
-  let nms = msg.replace(my,'OUR');
-
-  //italian part
-  nms = nms.replace(mio, 'NOSTRO');
-  nms = nms.replace(mia, 'NOSTRA');
-  nms = nms.replace(miei, 'NOSTRI');
-  nms = nms.replace(mie, 'NOSTRE');
-
-  if(nms.localeCompare(msg) != 0)
-
-  ctx.reply(nms+'*');
-  //send(chat, nms+"*");
-
-}catch(e){console.log(e)}
+bot.on(['message', 'video', 'photo'], (ctx) => {
+	let msg = ctx.message.text || ctx.message.caption;
+	try {
+		let simpsonref = msg.replace(/ /gi, '');
+		if (simpsonref.toLowerCase().includes('unionesovietica?manonsieradisciolta?')) ctx.reply('Si, è questo che volevamo farvi credere *preme bottone*');
+		let nms = marxify(msg);
+		if (nms.localeCompare(msg) != 0)
+			ctx.reply(nms + ' *'); // Inviamo la NOSTRA correzzione
+	} catch (e) { console.log(e) }
 });
 
 bot.launch();
