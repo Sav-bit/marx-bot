@@ -21,17 +21,20 @@ bot.use(rateLimit({
 			next();
 		} else if (sinceLast < 10000) {
 			let msg = ctx.message.text || ctx.message.caption;
+			if (msg != null){
 			let nms = marxify(msg);
 			if (nms.localeCompare(msg) != 0)
 				ctx.reply('State sprecando il NOSTRO tempo, abbiamo anche altro da fare oltre che correggere messaggi.');
+		}
 		}
 	}
 }));
 
 bot.start((ctx) => ctx.reply('Mi fa piacere essere qui kompagni.'));
 
-bot.on(['message', 'video', 'photo'], (ctx) => {
+bot.on(['message', 'video', 'photo', 'sticker'], (ctx) => {
 	let msg = ctx.message.text || ctx.message.caption;
+	if (msg != null)
 	try {
 		let simpsonref = msg.replace(/ /gi, '');
 		if (simpsonref.toLowerCase().includes('unionesovietica?manonsieradisciolta?')) ctx.reply('Si, è questo che volevamo farvi credere *preme bottone*');
